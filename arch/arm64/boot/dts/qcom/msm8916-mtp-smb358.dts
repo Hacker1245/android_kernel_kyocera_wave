@@ -1,0 +1,68 @@
+/*
+ * This software is contributed or developed by KYOCERA Corporation.
+ * (C) 2015 KYOCERA Corporation
+ */
+/* Copyright (c) 2014, The Linux Foundation. All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License version 2 and
+* only version 2 as published by the Free Software Foundation.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*/
+
+/dts-v1/;
+
+#include "msm8916-mtp.dtsi"
+#include "msm8916-memory.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. MSM 8916 SMB358 MTP";
+	compatible = "qcom,msm8916-mtp", "qcom,msm8916", "qcom,mtp";
+	qcom,board-id = <8 2>;
+};
+
+&soc {
+	i2c@78b8000 {
+		smb358-charger@57 {
+			compatible = "qcom,smb358-charger";
+			reg = <0x57>;
+			interrupt-parent = <&msm_gpio>;
+			interrupts = <62 0x0>;
+			qcom,irq-gpio = <&msm_gpio 62 0x00>;
+			vcc-i2c-supply = <&pm8916_l5>;
+			qcom,float-voltage-mv = <4340>;
+			qcom,chg-inhibit-disabled;
+			qcom,iterm-ma = <125>;
+			qcom,recharge-mv = <200>;
+			qcom,fastchg-current-max-ma = <1500>;
+			qcom,bms-psy-name = "bms";
+			qcom,chg-vadc = <&pm8916_vadc>;
+			qcom,chg-adc_tm = <&pm8916_adc_tm>;
+			qcom,using-pmic-therm;
+			qcom,hot-bat-decidegc = <550>;
+			qcom,cold-bat-decidegc = <0>;
+			qcom,bat-present-decidegc = <400>;
+			qcom,warm-bat-decidegc = <450>;
+			qcom,cool-bat-decidegc = <100>;
+			qcom,warm-bat-ma = <1000>;
+			qcom,cool-bat-ma = <1000>;
+			qcom,warm-bat-mv = <4240>;
+			qcom,cool-bat-mv = <4240>;
+			qcom,thermal-mitigation = <1500 600 200 200>;
+			oem,factory-vfloat-mv = <3960>;
+		};
+	};
+};
+
+&pm8916_chg {
+	status = "ok";
+	qcom,use-external-charger;
+};
+
+&pm8916_bms {
+	status = "ok";
+};
